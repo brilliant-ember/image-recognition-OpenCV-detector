@@ -50,6 +50,9 @@ def mointerDetectionFlag():
         if detected:
             print("Detected a body")
             detected = False
+            responce = requests.post("https://xbackend.appspot.com/fallCamera", json={"status":"true"})
+            if responce.status_code == 200:
+                print("sent to the server")
         else:
             sleep(2)
             if not detected:

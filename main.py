@@ -66,7 +66,7 @@ def openCV():
         for (x,y,w,h) in faces:
             global detected
             global runDetector
-
+            
             detected = True
             cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
             roi_gray = gray[y:y+h, x:x+w]
@@ -93,12 +93,14 @@ def mointerDetectionFlag():
         sleep(0.5)
         if detected:
             print("Detected")
+            responce = requests.post("https://xbackend.appspot.com/fallCamera", json={"status":"true"})
+            if responce.status_code == 200:
+                print("sent to the server")
             detected = False
         else:
             sleep(2)
             if not detected:
                 print("not detected for a few seconds")
-
 
 t1 = threading.Thread(target=openCV)
 t1.daemon = True
